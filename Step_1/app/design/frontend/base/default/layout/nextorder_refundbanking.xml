@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+
+    <rma_rma_new>
+        <label>Rewrite rma_rma_new</label>
+        <reference name="head">
+            <action method="addJs"><script>nextorder/refundbanking/frontend/kontoinfos.js</script></action>
+        </reference>
+        <reference name="content">
+            <!-- Design Package Xulin -->
+            <block after="rma.rma.new" type="refundbanking/frontend_rma_kontoanfrage" name="kontoanfrage" template="refundbanking/frontend/kontoanfrage.phtml"/>
+        </reference>
+    </rma_rma_new>
+</layout>

@@ -1,0 +1,19 @@
+
+<div class="box-left">
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form"><?php echo $this->__('Sepa XML Gutschrift') ?></h4>
+
+            <div class="form-buttons">
+
+                    <button onclick="window.location='<?php echo $this->getMarkUrl(false) ?>'" type="button">
+                        <span><span><span><?php echo Mage::helper('adminhtml')->__('Download'); ?></span></span></span>
+                    </button>
+
+            </div>
+        </div>
+        <div class="fieldset">
+            <?php print_r($this->getKontoInfo()); ?>
+        </div>
+    </div>
+</div>

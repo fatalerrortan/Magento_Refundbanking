@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<config>
+    <tabs>
+        <kontoconfigtab translate="label" module="refundbanking">
+            <label>NextOrder Extensions</label>
+            <sort_order>700</sort_order>
+        </kontoconfigtab>
+    </tabs>
+    <sections>
+        <kontoconfigbutton translate="label" module="refundbanking">
+            <label>Rückzahlungskonto für Zahlungsart</label>
+            <tab>kontoconfigtab</tab>
+            <frontend_type>text</frontend_type>
+               <sort_order>1300</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+
+            <groups>
+                <option translate="label">
+                    <label>Bereits eingelegte Konten</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <kontotable translate="label">
+                            <label>Konto Tabelle</label>
+                            <frontend_type>text</frontend_type>
+                            <!-- Block/ -->
+                            <frontend_model>refundbanking/adminhtml_system_config_kontotab</frontend_model>
+                            <!-- Model/ -->
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                           <!-- <backend_model>kontoconfig/validate</backend_model> -->
+                            <!-- Model/ -->
+                        <!--    <source_model>adminhtml/system_config_source_country</source_model> -->
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[JEDER vorhandenen Zahlungsarten im Shop kann jeweils EINE Kontoverbindung zugewiesen werden]]></comment>
+                        </kontotable>
+<!--
+                        <errormsg translate="label">
+                            <label>Error Message</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>kontoconfig/validate</backend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </errormsg>
+-->
+                    </fields>
+                </option>
+            </groups>
+
+        </kontoconfigbutton>
+    </sections>
+</config>

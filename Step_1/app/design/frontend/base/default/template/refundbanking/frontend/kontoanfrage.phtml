@@ -1,0 +1,16 @@
+
+<?php
+    //print_r($this->printKontoInfos()->getPayment()->getMethodInstance()->getCode());
+    //oder
+    //print_r($this->printKontoInfos()->getPayment()->getMethodInstance()->getTitle());
+        //echo $this->printKontoInfos()[0];
+        //$helper = Mage::helper('refundbanking/data');
+?>
+<br/>
+<form id="kontoinfos" style="display: none">
+        <input type="text" id="iban" name="iban" placeholder="Iban"/>
+        <input type="text" id="bic" name="bic" placeholder="BIC"/>
+</form>
+<input id="isConfig" type="hidden" value="<?php  echo $this->printKontoInfos()[1] ?>"/>
+<input id="controllerUrl" type="hidden" value="<?php  echo Mage::getUrl('refundbanking/attr/setkonto'); ?>"/>
+

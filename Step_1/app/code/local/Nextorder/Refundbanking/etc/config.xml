@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Nextorder_Refundbanking>
+            <version>0.1.0</version>
+        </Nextorder_Refundbanking>
+    </modules>
+    <global>
+        <helpers>
+            <refundbanking>
+                <class>Nextorder_Refundbanking_Helper</class>
+            </refundbanking>
+        </helpers>
+        <blocks>
+            <refundbanking>
+                <class>Nextorder_Refundbanking_Block</class>
+            </refundbanking>
+        </blocks>
+        <models>
+            <refundbanking>
+                <class>Nextorder_Refundbanking_Model</class>
+            </refundbanking>
+        </models>
+        <events>
+            <admin_system_config_changed_section_kontoconfigbutton>
+                <observers>
+                    <refundbanking>
+                        <type>singleton</type>
+                        <class>refundbanking/observer</class>
+                        <method>_beforeConfigSave</method>
+                    </refundbanking>
+                </observers>
+            </admin_system_config_changed_section_kontoconfigbutton>
+
+            <sales_creditmemo_item_save_after>
+                <observers>
+                    <refundbanking>
+                        <type>singleton</type>
+                        <class>refundbanking/observer</class>
+                        <method>_afterCreditmemoSave</method>
+                    </refundbanking>
+                </observers>
+            </sales_creditmemo_item_save_after>
+        </events>
+
+        <rewrite>
+            <refundbanking>
+                <from><![CDATA[#^/rma/rma/new/#]]></from>
+                <to>/refundbanking/rma/new/</to>
+            </refundbanking>
+        </rewrite>
+    </global>
+
+    <frontend>
+        <routers>
+            <refundbanking>
+                <use>standard</use>
+                <args>
+                    <module before="Mirasvit_Rma_RmaController">Nextorder_Refundbanking</module>
+                    <frontName>refundbanking</frontName>
+                </args>
+            </refundbanking>
+        </routers>
+
+        <layout>
+            <updates>
+                <refundbanking module="Nextorder_Refundbanking">
+                    <file>nextorder_refundbanking.xml</file>
+                </refundbanking>
+            </updates>
+        </layout>
+
+    </frontend>
+
+    <admin>
+        <routers>
+            <refundadmin>
+                <use>admin</use>
+                <args>
+                    <module>Nextorder_Refundbanking</module>
+                    <frontName>refundadmin</frontName>
+                </args>
+            </refundadmin>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <refundbanking>
+                    <file>nextorder_refundbanking.xml</file>
+                </refundbanking>
+        </updates>
+        </layout>
+    </adminhtml>
+
+</config>

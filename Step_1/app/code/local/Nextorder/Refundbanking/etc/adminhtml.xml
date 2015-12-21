@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <kontoconfigbutton translate="title" module="refundbanking">
+                                       <title>Konto Konfiguration</title>
+                                    </kontoconfigbutton>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
