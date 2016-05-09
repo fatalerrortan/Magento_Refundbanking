@@ -72,26 +72,26 @@
 
     </frontend>
 
-    <admin>
-        <routers>
-            <refundadmin>
-                <use>admin</use>
-                <args>
-                    <module>Nextorder_Refundbanking</module>
-                    <frontName>refundadmin</frontName>
-                </args>
-            </refundadmin>
-        </routers>
-    </admin>
+    <!--<admin>-->
+        <!--<routers>-->
+            <!--<adminhtml>-->
+				<!--<args>-->
+					<!--<modules>-->
+						<!--<refundadmin before="Mage_Adminhtml">Nextorder_Refundbanking_Adminhtml</refundadmin>-->
+					<!--</modules>-->
+				<!--</args>-->
+			<!--</adminhtml>-->
+        <!--</routers>-->
+    <!--</admin>-->
 
-    <adminhtml>
-        <layout>
-            <updates>
-                <refundbanking>
-                    <file>nextorder_refundbanking.xml</file>
-                </refundbanking>
-        </updates>
-        </layout>
-    </adminhtml>
+    <!--<adminhtml>-->
+        <!--<layout>-->
+            <!--<updates>-->
+                <!--<refundbanking>-->
+                    <!--<file>nextorder_refundbanking.xml</file>-->
+                <!--</refundbanking>-->
+            <!--</updates>-->
+        <!--</layout>-->
+    <!--</adminhtml>-->
 
 </config>

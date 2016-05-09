@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 
 <config>
-    <tabs>
-        <kontoconfigtab translate="label" module="refundbanking">
-            <label>NextOrder Extensions</label>
-            <sort_order>700</sort_order>
-        </kontoconfigtab>
-    </tabs>
+    <!--<tabs>-->
+        <!--<kontoconfigtab translate="label" module="refundbanking">-->
+            <!--<label>NextOrder Extensions</label>-->
+            <!--<sort_order>700</sort_order>-->
+        <!--</kontoconfigtab>-->
+    <!--</tabs>-->
     <sections>
         <kontoconfigbutton translate="label" module="refundbanking">
             <label>Rückzahlungskonto für Zahlungsart</label>
-            <tab>kontoconfigtab</tab>
+            <tab>nextorder_extensions</tab>
             <frontend_type>text</frontend_type>
                <sort_order>1300</sort_order>
             <show_in_default>1</show_in_default>

@@ -25,7 +25,7 @@ var $j = jQuery.noConflict();
              processData:false,
              data:postData,
              success:function(responseText){
-                alert(responseText);
+                //alert(responseText);
              }
          });
 

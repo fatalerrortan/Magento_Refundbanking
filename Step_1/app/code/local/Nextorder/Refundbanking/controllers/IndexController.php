@@ -10,24 +10,9 @@
 
         public function indexAction(){
 
-//            $this->loadLayout();
-//            $this->renderLayout();
+                $customer = Mage::getModel('customer/customer')->load(93743);
+                echo $customer->getData('debit_payment_account_iban') ." und ".$customer->getData('debit_payment_account_swift');
 
-            // For Test
 
-//            $helper = Mage::helper('refundbanking/data');
-//            print_r($helper->ini_Sepa_XML());
-            $incrementId = 100000002;
-            $collection = Mage::getResourceModel('sales/order_creditmemo_collection')
-                ->addFieldToFilter('order_id', 2); /* here we have no load memo by order id not increment id.Increment id is the creditmemo increment id not order increment id. */
-
-            foreach($collection as $item) {
-
-                $creditMessage = Mage::getResourceModel('sales/order_creditmemo_comment_collection')
-                    ->addAttributeToFilter('parent_id', $item->getId()); /* here we need to use parent_id not entity_id.*/
-
-            }
-            var_dump($creditMessage->getData());
-            exit();
         }
     }
