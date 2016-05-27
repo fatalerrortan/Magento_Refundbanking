@@ -6,13 +6,16 @@
  * Time: 14:04
  */
 //require_once "Amasty/Customerattr/controllers/Adminhtml/ManageController.php";
-    class Nextorder_Refundbanking_IndexController extends Mage_Core_Controller_Front_Action{
+    class Nextorder_Refundbanking_IndexController extends Mage_Core_Controller_Front_Action
+    {
 
-        public function indexAction(){
-
-//                $customer = Mage::getModel('customer/customer')->load(93743);
-//                echo $customer->getData('debit_payment_account_iban') ." und ".$customer->getData('debit_payment_account_swift');
-           $test =  Mage::getModel('sales/order_status')->getResourceCollection()->getData();
-            var_dump($test);
+        public function indexAction()
+        {
+            $base_path = Mage::getBaseDir('base');
+             if(file_exists($base_path . "/media/Sepa_Gutschrift/Gutschrift-1026-15-401.xml")){
+                echo "exist";
+             }else{
+                 echo "nothing";
+             }
         }
     }

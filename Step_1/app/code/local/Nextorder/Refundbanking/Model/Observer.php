@@ -7,6 +7,8 @@
  */
 class Nextorder_Refundbanking_Model_Observer{
 
+//    protected $indexCount = 0;
+
     public function _beforeConfigSave(){
 
         $helper = Mage::helper('refundbanking/data');
@@ -26,19 +28,28 @@ class Nextorder_Refundbanking_Model_Observer{
     public function _afterCreditmemoSave(Varien_Event_Observer $event){
 
         $incrementCreditID = $event->getEvent()->getDataObject()->getCreditmemo()->getIncrementId();
-        $adminUser = Mage::getSingleton('admin/session')->getUser()->getUsername();
+        $base_path = Mage::getBaseDir('base');
+        if(file_exists($base_path . "/media/Sepa_Gutschrift/".$incrementCreditID.".xml")){return true;}
+        else{
+            $adminUser = Mage::getSingleton('admin/session')->getUser()->getUsername();
 //        $order = $event->getEvent()->getOrder();
 
         $Grand_Total = $event->getEvent()->getDataObject()->getCreditmemo()->getData('grand_total');
 //        $Base_Total = $event->getEvent()->getDataObject()->getCreditmemo()->getData('base_grand_total');
-//        Mage::log( , null, 'xulin.log');
+//        Mage::log($event->getEvent()->getDataObject()->getCreditmemo()->getData() , null, 'xulin.log');
         $helper= Mage::helper("refundbanking/data");
         $orderNr = $event->getEvent()->getDataObject()->getCreditmemo()->getData('order_id');
         $order = Mage::getModel('sales/order')->load($orderNr);
         $payment_code = $order->getPayment()->getMethodInstance()->getCode();
 //        $payment_title = $order->getPayment()->getMethodInstance()->getTitle();
 
-        $paymentPools = array('ops_cc','paypal_billing_agreement','paypal_express');
+
+//            $order->addStatusToHistory(Mage_Sales_Model_Order::STATE_CLOSED);
+//            $order->addStatusHistoryComment("My comment why the status was changed", Mage_Sales_Model_Order::STATE_CLOSED);
+//            $order->setData('state', Mage_Sales_Model_Order::STATE_CLOSED);
+//            $order->save();
+
+            $paymentPools = array('ops_cc','paypal_billing_agreement','paypal_express');
 //        Mage::log( "it works +1", null, 'xulin.log');
 
         if(!in_array($payment_code, $paymentPools)){
@@ -50,11 +61,17 @@ class Nextorder_Refundbanking_Model_Observer{
             $urlForXML = $helper->getSepaXML($customer->getName(), $customer->getId(), $customer->getData('debit_payment_account_iban'), $customer->getData('debit_payment_account_swift'),
                 $kontoInfos_shop['inhaber'], $kontoInfos_shop['iban'], $kontoInfos_shop['bic'], $order->getIncrementId(), $incrementCreditID, $Grand_Total);
             Mage::getSingleton('adminhtml/session')->addSuccess("Sepa XML Gutschrit ist von User " . $adminUser . " erstellt.<a href='" . str_replace('index.php/', '', Mage::getUrl()) . "media/Sepa_Gutschrift/" . $incrementCreditID . ".xml' download> Zum Download </a>");
+
+//            $order = $event->getData();
+//            Mage::log( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!".$order, null, 'refund.log');
+
+
             $event->getEvent()->getDataObject()->getCreditmemo()->addComment("Sepa XML Gutschrit ist von User " . $adminUser . " erstellt.<a href='" . str_replace('index.php/', '', Mage::getUrl()) . "media/Sepa_Gutschrift/" . $incrementCreditID . ".xml' download> Zum Download </a>", true, true);
-
+            }
+//        Mage::log( "it works: ". $this->indexCount, null, 'xulin.log');
+//        $this->indexCount = $this->indexCount + 1;
         }
-//        Mage::log( "it works +2", null, 'xulin.log');
-
     }
+
 }
 ?>
