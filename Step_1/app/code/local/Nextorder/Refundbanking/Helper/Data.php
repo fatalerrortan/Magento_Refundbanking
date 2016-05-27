@@ -132,8 +132,7 @@ class Nextorder_Refundbanking_Helper_Data extends Mage_Core_Helper_Abstract{
 			$cdata = $ini_data->format(DateTime::ISO8601);
 			$defaultTermin = $ini_data->modify('+1 day')->format("Y-m-d");https://www.google.de/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=download+failed+forbidden++magento
 
-			$xml = "
-<?xml version='1.0' encoding='iso-8859-1'?>
+			$xml = "<?xml version='1.0' encoding='iso-8859-1'?>
 <Document xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='urn:iso:std:iso:20022:tech:xsd:pain.001.002.03 pain.001.002.03.xsd' xmlns='urn:iso:std:iso:20022:tech:xsd:pain.001.002.03'>
   <CstmrCdtTrfInitn>
     <GrpHdr>
