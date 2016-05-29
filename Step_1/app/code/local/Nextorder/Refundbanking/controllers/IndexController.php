@@ -11,11 +11,13 @@
 
         public function indexAction()
         {
-            $base_path = Mage::getBaseDir('base');
-             if(file_exists($base_path . "/media/Sepa_Gutschrift/Gutschrift-1026-15-401.xml")){
-                echo "exist";
-             }else{
-                 echo "nothing";
-             }
+//            $jetzt = date("Y-m-d H:i:s");
+//            $ini_data = new DateTime($jetzt);
+//            $cdata = str_replace('+0000','',$ini_data->format(DateTime::ISO8601));
+//            $defaultTermin = str_replace('+0000','', $ini_data->modify('+1 day')->format(DateTime::ISO8601));
+//            echo $cdata.' und '.$defaultTermin;
+
+            $string = 'DE 12312 123213 32435 123123 34535';
+            echo str_replace(' ','',$string);
         }
     }

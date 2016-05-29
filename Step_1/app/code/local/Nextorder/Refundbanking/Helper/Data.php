@@ -1,6 +1,5 @@
 <?php
-//$ExternalLibPath=Mage::getModuleDir('', 'Nextorder_Refundbanking').DS.'Helper'.DS.'sepa_lib'.DS.'SEPA'.DS.'XMLGenerator.php';
-//include_once($ExternalLibPath);
+
 class Nextorder_Refundbanking_Helper_Data extends Mage_Core_Helper_Abstract{
 
 		public $countArray = array('label' => '', 'einsatz' => '');
@@ -126,11 +125,11 @@ class Nextorder_Refundbanking_Helper_Data extends Mage_Core_Helper_Abstract{
 		}
 
 		public function ini_Sepa_XML($name_kunde, $kundennr, $iban_kunde, $bic_kunde, $name_shop, $iban_shop, $bic_shop, $orderNr, $refundSumme){
+
 			$jetzt = date("Y-m-d H:i:s");
-			//$defaultTermin = $datetime->modify('+1 day');
 			$ini_data = new DateTime($jetzt);
-			$cdata = $ini_data->format(DateTime::ISO8601);
-			$defaultTermin = $ini_data->modify('+1 day')->format("Y-m-d");https://www.google.de/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=download+failed+forbidden++magento
+			$cdata = str_replace('+0000','',$ini_data->format(DateTime::ISO8601));
+			$defaultTermin = str_replace('+0000','', $ini_data->modify('+1 day')->format(DateTime::ISO8601));
 
 			$xml = "<?xml version='1.0' encoding='iso-8859-1'?>
 <Document xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='urn:iso:std:iso:20022:tech:xsd:pain.001.002.03 pain.001.002.03.xsd' xmlns='urn:iso:std:iso:20022:tech:xsd:pain.001.002.03'>
@@ -171,14 +170,14 @@ class Nextorder_Refundbanking_Helper_Data extends Mage_Core_Helper_Abstract{
       <ChrgBr>SLEV</ChrgBr>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>check_". $orderNr ."</EndToEndId>
+          <EndToEndId>". $orderNr ."</EndToEndId>
         </PmtId>
         <Amt>
           <InstdAmt Ccy='EUR'>". $refundSumme ."</InstdAmt>
         </Amt>
         <CdtrAgt>
           <FinInstnId>
-            <BIC>". $bic_kunde ."</BIC>
+            <BIC>". str_replace(' ','',$bic_kunde) ."</BIC>
           </FinInstnId>
         </CdtrAgt>
         <Cdtr>
@@ -186,7 +185,7 @@ class Nextorder_Refundbanking_Helper_Data extends Mage_Core_Helper_Abstract{
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>". $iban_kunde ."</IBAN>
+            <IBAN>". str_replace(' ','',$iban_kunde) ."</IBAN>
           </Id>
         </CdtrAcct>
         <RmtInf>

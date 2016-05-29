@@ -15,7 +15,7 @@ class Nextorder_Refundbanking_AttrController extends Mage_Core_Controller_Front_
             if(!empty($kontoinfos)){
 
                 $helper= Mage::helper('refundbanking/data');
-                $helper->setKontoInfos($kontoinfos['iban'], $kontoinfos['bic']);
+                $helper->setKontoInfos(str_replace(' ','',$kontoinfos['iban']), str_replace(' ','',$kontoinfos['bic']));
                 //echo "ferig";
             }
             //echo $kontoinfos["iban"] . " und " . $kontoinfos["bic"];
