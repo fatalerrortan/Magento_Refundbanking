@@ -16,8 +16,16 @@
 //            $cdata = str_replace('+0000','',$ini_data->format(DateTime::ISO8601));
 //            $defaultTermin = str_replace('+0000','', $ini_data->modify('+1 day')->format(DateTime::ISO8601));
 //            echo $cdata.' und '.$defaultTermin;
+//
+//            $string = 'DE 12312 123213 32435 123123 34535';
+//            echo str_replace(' ','',$string);
 
-            $string = 'DE 12312 123213 32435 123123 34535';
-            echo str_replace(' ','',$string);
+            $order = Mage::getModel('sales/order')->loadByIncrementId(1029-16-401);
+            $comments = $order->getAllStatusHistory();
+            foreach ($comments as $comment) {
+                $comment->delete();
+            }
+
+            echo "fertig";
         }
     }

@@ -29,7 +29,10 @@ class Nextorder_Refundbanking_Model_Observer{
 
         $incrementCreditID = $event->getEvent()->getDataObject()->getCreditmemo()->getIncrementId();
         $base_path = Mage::getBaseDir('base');
-        if(file_exists($base_path . "/media/Sepa_Gutschrift/".$incrementCreditID.".xml")){return true;}
+        if(file_exists($base_path . "/media/Sepa_Gutschrift/".$incrementCreditID.".xml")){
+//            Mage::log( "it works!!!!!!!!!!!: test ", null, 'xulin.log');
+            return true;
+        }
         else{
             $adminUser = Mage::getSingleton('admin/session')->getUser()->getUsername();
 //        $order = $event->getEvent()->getOrder();
@@ -47,6 +50,7 @@ class Nextorder_Refundbanking_Model_Observer{
 //            $order->addStatusToHistory(Mage_Sales_Model_Order::STATE_CLOSED);
 //            $order->addStatusHistoryComment("My comment why the status was changed", Mage_Sales_Model_Order::STATE_CLOSED);
 //            $order->setData('state', Mage_Sales_Model_Order::STATE_CLOSED);
+//            $order->addStatusToHistory('closed', 'Put!!!!!!!!!!!!!!!!!!!!here', false);
 //            $order->save();
 
             $paymentPools = array('ops_cc','paypal_billing_agreement','paypal_express');
@@ -68,9 +72,18 @@ class Nextorder_Refundbanking_Model_Observer{
 
             $event->getEvent()->getDataObject()->getCreditmemo()->addComment("Sepa XML Gutschrit ist von User " . $adminUser . " erstellt.<a href='" . str_replace('index.php/', '', Mage::getUrl()) . "media/Sepa_Gutschrift/" . $incrementCreditID . ".xml' download> Zum Download </a>", true, true);
             }
-//        Mage::log( "it works: ". $this->indexCount, null, 'xulin.log');
-//        $this->indexCount = $this->indexCount + 1;
+//            return $this->_statusChange($orderNr);
         }
+
+    }
+
+    public function _statusChange(){
+//        $order = Mage::getModel('sales/order')->load($orderNr);
+//        $order->addStatusToHistory(Mage_Sales_Model_Order::STATE_CLOSED)->save();
+//        $order->addStatusToHistory('closed', 'Put your comment here', false);
+
+        Mage::log( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!12312312312", null, 'refund.log');
+        return true;
     }
 
 }

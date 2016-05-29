@@ -41,6 +41,7 @@
                     </refundbanking>
                 </observers>
             </sales_creditmemo_item_save_after>
+
         </events>
 
         <rewrite>
