@@ -11,21 +11,19 @@
 
         public function indexAction()
         {
-//            $jetzt = date("Y-m-d H:i:s");
-//            $ini_data = new DateTime($jetzt);
-//            $cdata = str_replace('+0000','',$ini_data->format(DateTime::ISO8601));
-//            $defaultTermin = str_replace('+0000','', $ini_data->modify('+1 day')->format(DateTime::ISO8601));
-//            echo $cdata.' und '.$defaultTermin;
-//
-//            $string = 'DE 12312 123213 32435 123123 34535';
-//            echo str_replace(' ','',$string);
-
-            $order = Mage::getModel('sales/order')->loadByIncrementId(1029-16-401);
-            $comments = $order->getAllStatusHistory();
-            foreach ($comments as $comment) {
-                $comment->delete();
-            }
-
+            $base_path = Mage::getBaseDir('base');
+            $postData = $this->getRequest()->getPost('sepa');
+            file_put_contents($base_path."/app/code/local/Nextorder/Refundbanking/Helper/sepaCheck.txt", $postData);
             echo "fertig";
+        }
+
+        public function index_1Action(){
+
+            $jetzt = date("Y-m-d H:i:s");
+            $ini_data = new DateTime($jetzt);
+            $cdata = str_replace('+0000','',$ini_data->format(DateTime::ISO8601));
+            $remove = strstr($ini_data->modify('+1 day')->format(DateTime::ISO8601),'T',true);
+
+            echo str_replace('T','',strstr($ini_data->modify('+1 day')->format(DateTime::ISO8601),'T',true));
         }
     }

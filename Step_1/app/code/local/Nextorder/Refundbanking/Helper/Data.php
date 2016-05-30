@@ -129,7 +129,7 @@ class Nextorder_Refundbanking_Helper_Data extends Mage_Core_Helper_Abstract{
 			$jetzt = date("Y-m-d H:i:s");
 			$ini_data = new DateTime($jetzt);
 			$cdata = str_replace('+0000','',$ini_data->format(DateTime::ISO8601));
-			$defaultTermin = str_replace('+0000','', $ini_data->modify('+1 day')->format(DateTime::ISO8601));
+			$edata = str_replace('T','',strstr($ini_data->modify('+1 day')->format(DateTime::ISO8601),'T',true));
 
 			$xml = "<?xml version='1.0' encoding='iso-8859-1'?>
 <Document xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='urn:iso:std:iso:20022:tech:xsd:pain.001.002.03 pain.001.002.03.xsd' xmlns='urn:iso:std:iso:20022:tech:xsd:pain.001.002.03'>
@@ -153,7 +153,7 @@ class Nextorder_Refundbanking_Helper_Data extends Mage_Core_Helper_Abstract{
           <Cd>SEPA</Cd>
         </SvcLvl>
       </PmtTpInf>
-      <ReqdExctnDt>" .$defaultTermin. "</ReqdExctnDt>
+      <ReqdExctnDt>" .$edata. "</ReqdExctnDt>
       <Dbtr>
         <Nm>". $name_shop ."</Nm>
       </Dbtr>
