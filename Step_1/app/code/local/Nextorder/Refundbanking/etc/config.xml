@@ -15,6 +15,11 @@
             <refundbanking>
                 <class>Nextorder_Refundbanking_Block</class>
             </refundbanking>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_creditmemo_create_items>Nextorder_Refundbanking_Block_Adminhtml_Sales_Order_Creditmemo_Create_Items</sales_order_creditmemo_create_items>
+                </rewrite>
+            </adminhtml>
         </blocks>
         <models>
             <refundbanking>
@@ -86,14 +91,14 @@
         </routers>
     </admin>
 
-    <!--<adminhtml>-->
-        <!--<layout>-->
-            <!--<updates>-->
-                <!--<refundbanking>-->
-                    <!--<file>nextorder_refundbanking.xml</file>-->
-                <!--</refundbanking>-->
-            <!--</updates>-->
-        <!--</layout>-->
-    <!--</adminhtml>-->
+    <adminhtml>
+        <layout>
+            <updates>
+                <refundbanking>
+                    <file>nextorder_refundbanking.xml</file>
+                </refundbanking>
+            </updates>
+        </layout>
+    </adminhtml>
 
 </config>

@@ -236,27 +236,27 @@ class Nextorder_Refundbanking_Adminhtml_Sales_Order_CreditmemoController extends
 //    /**
 //     * Update items qty action
 //     */
-//    public function updateQtyAction()
-//    {
-//        try {
-//            $creditmemo = $this->_initCreditmemo(true);
-//            $this->loadLayout();
-//            $response = $this->getLayout()->getBlock('order_items')->toHtml();
-//        } catch (Mage_Core_Exception $e) {
-//            $response = array(
-//                'error'     => true,
-//                'message'   => $e->getMessage()
-//            );
-//            $response = Mage::helper('core')->jsonEncode($response);
-//        } catch (Exception $e) {
-//            $response = array(
-//                'error'     => true,
-//                'message'   => $this->__('Cannot update the item\'s quantity.')
-//            );
-//            $response = Mage::helper('core')->jsonEncode($response);
-//        }
-//        $this->getResponse()->setBody($response);
-//    }
+    public function updateQtyAction()
+    {
+        try {
+            $creditmemo = $this->_initCreditmemo(true);
+            $this->loadLayout();
+            $response = $this->getLayout()->getBlock('order_items')->setTemplate('nextorder/sales/order/creditmemo/create/items.phtml')->toHtml();
+        } catch (Mage_Core_Exception $e) {
+            $response = array(
+                'error'     => true,
+                'message'   => $e->getMessage()
+            );
+            $response = Mage::helper('core')->jsonEncode($response);
+        } catch (Exception $e) {
+            $response = array(
+                'error'     => true,
+                'message'   => $this->__('Cannot update the item\'s quantity.')
+            );
+            $response = Mage::helper('core')->jsonEncode($response);
+        }
+        $this->getResponse()->setBody($response);
+    }
 
     /**
      * Save creditmemo
@@ -264,7 +264,7 @@ class Nextorder_Refundbanking_Adminhtml_Sales_Order_CreditmemoController extends
      */
     public function saveAction()
     {
-        Mage::log( "Rewrite Works", null, 'xulin.log');
+//        Mage::log( "Rewrite Works", null, 'xulin.log');
         $data = $this->getRequest()->getPost('creditmemo');
         if (!empty($data['comment_text'])) {
             Mage::getSingleton('adminhtml/session')->setCommentText($data['comment_text']);

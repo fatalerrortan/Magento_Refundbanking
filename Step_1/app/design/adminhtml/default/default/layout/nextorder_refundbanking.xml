@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="order_items">
+            <action method="setTemplate"><template>nextorder/sales/order/creditmemo/create/items.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+</layout>

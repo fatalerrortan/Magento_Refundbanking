@@ -32,7 +32,7 @@ class Nextorder_Refundbanking_Model_Observer{
 //        Mage::log( "new_VAR kommt: ". $testVar, null, 'xulin.log');
 //        Mage::unregister('test_var');
         $base_path = Mage::getBaseDir('base');
-        $orgin_string = $urString = str_replace(PHP_EOL,'',file_get_contents($base_path."/app/code/local/Nextorder/Refundbanking/Helper/sepaCheck.txt"));
+        $orgin_string = str_replace(PHP_EOL,'',file_get_contents($base_path."/app/code/local/Nextorder/Refundbanking/Helper/sepaCheck.txt"));
         if($orgin_string == 0){
             return true;
         }else{
