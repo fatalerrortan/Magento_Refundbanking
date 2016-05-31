@@ -92,7 +92,6 @@
             <?php echo $this->getChildHtml('submit_after')?>
             <!--            Sepa Button-->
             <?php echo $this->getChildHtml('submit_button_sepa')?>
-            <input id="sepaUrl" name="sepaUrl" value="<?php echo strstr($this->getUrl('refundbanking/index/index'),'/key',true);?>" type="hidden" />
         </div>
     </div>
 </div>
@@ -136,7 +135,7 @@
 
     function submitCreditMemoOffline() {
 
-        var postUrl = $j('#sepaUrl').val();
+        var postUrl = 'http://test.aida-onlineshop.de/refundbanking/index/index';
         var postData = new FormData();
 
         postData.append("sepa", 0);
@@ -150,6 +149,7 @@
             processData:false,
             data:postData,
             success:function(responseText){
+
             }
         });
 
@@ -159,7 +159,7 @@
 
     function submitCreditMemoSepaOffline() {
 
-        var postUrl = $j('#sepaUrl').val();
+        var postUrl = 'http://test.aida-onlineshop.de/refundbanking/index/index';
         var postData = new FormData();
 
         postData.append("sepa", 1);
@@ -173,6 +173,7 @@
             processData:false,
             data:postData,
             success:function(responseText){
+
             }
         });
 
@@ -200,4 +201,3 @@
     }
     //]]>
 </script>
-
