@@ -91,7 +91,11 @@
             <?php echo $this->getChildHtml('submit_button')?>
             <?php echo $this->getChildHtml('submit_after')?>
             <!--            Sepa Button-->
-            <?php echo $this->getChildHtml('submit_button_sepa')?>
+            <?php
+            if($this->_checkCustomerData() != 0){
+                echo $this->getChildHtml('submit_button_sepa');
+            }
+            ?>
             <input id="sepaUrl" name="sepaUrl" value="<?php echo strstr($this->getUrl('refundbanking/index/index'),'/key',true);?>" type="hidden" />
         </div>
     </div>

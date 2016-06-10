@@ -3,9 +3,9 @@
 class Nextorder_Refundbanking_Block_Adminhtml_Sales_Order_Creditmemo_Create_Items extends Mage_Adminhtml_Block_Sales_Order_Creditmemo_Create_Items
 {
 
+    public $customerCheck = '';
 
-    protected function _prepareLayout()
-    {
+    protected function _prepareLayout(){
 
         $onclick = "submitAndReloadArea($('creditmemo_item_container'),'".$this->getUpdateUrl()."')";
         $this->setChild(
@@ -56,8 +56,21 @@ class Nextorder_Refundbanking_Block_Adminhtml_Sales_Order_Creditmemo_Create_Item
                     'onclick'   => 'disableElements(\'submit-button\');submitCreditMemoSepaOffline()',
                 ))
             );
+
+            $customer = Mage::getModel('customer/customer')->load($this->getOrder()->getCustomerId());
+            if(empty($customer->getData('debit_payment_account_iban')) || empty($customer->getData('debit_payment_account_swift'))){
+                Mage::getSingleton('adminhtml/session')->addWarning("Bitte Fragen Sie die Iban und Bic vom Kunden zur SEPA-Gutschrift nach！");
+                $this->customerCheck = 0;
+            }
+
+
         }
 
         return parent::_prepareLayout();
+    }
+
+    public function _checkCustomerData(){
+
+        return $this->customerCheck;
     }
 }
