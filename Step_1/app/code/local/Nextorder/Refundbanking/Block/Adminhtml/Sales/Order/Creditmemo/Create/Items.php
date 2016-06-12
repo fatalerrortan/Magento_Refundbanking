@@ -52,7 +52,7 @@ class Nextorder_Refundbanking_Block_Adminhtml_Sales_Order_Creditmemo_Create_Item
             $payment_code = $order->getPayment()->getMethodInstance()->getCode();
             $paymentPools = array('ops_cc','paypal_billing_agreement','paypal_express');
 
-            if(!in_array($payment_code, $paymentPools)){
+            if(Mage::helper("refundbanking/data")->isConfig($payment_code)){
 
                 $customer = Mage::getModel('customer/customer')->load($this->getOrder()->getCustomerId());
                 if(!empty($customer->getData('debit_payment_account_iban')) && !empty($customer->getData('debit_payment_account_swift'))){

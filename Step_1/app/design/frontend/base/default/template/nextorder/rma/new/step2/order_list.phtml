@@ -1,0 +1,99 @@
+<?php
+/* @var $this Mirasvit_Rma_Block_Rma_New_Step2_OrderList */
+$orderPaymentCheck = 0;
+//$paymentPools = array('ops_cc','paypal_billing_agreement','paypal_express');
+$helper = Mage::helper('refundbanking/data');
+?>
+<?php foreach ($this->getItems() as $orderId => $items): ?>
+    <?php
+    $order = $this->getOrderById($orderId);
+    if($helper->isConfig($order->getPayment()->getMethodInstance()->getCode())){
+
+        $orderPaymentCheck = $orderPaymentCheck + 1;
+    }
+    ?>
+    <?php foreach ($items as $itemId => $item): ?>
+        <?php
+        $qty = $item['qty'];
+        $item = $this->getOrderItemById($itemId);
+        if (!$this->getIsAllowedToShow($item)) {
+            continue;
+        }
+        ?>
+        <tr>
+            <td>
+                <input name="orders[<?php echo $order->getId() ?>]" type="hidden" value="<?php echo $order->getId() ?>">
+                <input type="hidden" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId(); ?>][order_id]" value="<?php echo $order->getId() ?>">
+                <input type="hidden" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId(); ?>][order_item_id]" value="<?php echo $item->getOrderItemId() ?>">
+                <input type="hidden" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId(); ?>][is_return]" value="1">
+                <input type="hidden" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId(); ?>][qty_requested]"
+                       value="<?php echo $qty; ?>"
+                >
+                <input type="hidden" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId(); ?>][name]"
+                       value="<?php echo isset($orderItems[$order->getId()][$item->getOrderItemId()]['name']) ? $orderItems[$order->getId()][$item->getOrderItemId()]['name'] : ''; ?>"
+                >
+                <?php if ($item->getProduct()): ?>
+                    <img id="image" src="<?php echo $this->helper('catalog/image')->init($item->getProduct(), 'thumbnail')->resize(200) ?>" width="100px" />
+                <?php endif; ?>
+            </td>
+            <td>
+                <b><?php echo Mage::helper('rma')->getOrderItemLabel($item) ?></b>
+            </td>
+            <td>
+                <?php echo $qty; ?>
+            </td>
+            <td><?php echo Mage::helper('rma')->getOrderLabel($order); ?></td>
+            <td>
+                <?php if ($this->getConfig()->isCustomerReasonRequired()): ?>
+                    <div class="rma__customer-option">
+                        <label id="user-conditional" class="required"><?php echo $this->__('Reason') ?><em id="em-requered"> *</em></label>
+
+                        <select name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId() ?>][reason_id]" id="reason_id<?php echo $item->getOrderItemId() ?>" class="required-entry">
+                            <option value=""><?php echo $this->__('-- Select a Reason --')?></option>
+                            <?php foreach ($this->getReasonCollection() as $reason): ?>
+                                <option value="<?php echo $reason->getId()?>"><?php echo $reason->getName() ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                <?php endif ?>
+                <?php if ($this->getConfig()->isCustomerConditionRequired()): ?>
+                    <div class="rma__customer-option">
+                        <label id="user-conditional" class="required"><?php echo $this->__('Condition') ?><em id="em-requered"> *</em></label>
+
+                        <select name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId() ?>][condition_id]" id="condition_id<?php echo $item->getOrderItemId() ?>" class="required-entry">
+                            <option value=""><?php echo $this->__('-- Select a Condition --')?></option>
+                            <?php foreach ($this->getConditionCollection() as $condition): ?>
+                                <option value="<?php echo $condition->getId()?>"><?php echo $condition->getName() ?></option>
+                            <?php endforeach;?>
+                        </select>
+                    </div>
+                <?php endif ?>
+                <?php if ($this->getConfig()->isCustomerResolutionRequired()): ?>
+                    <div class="rma__customer-option">
+                        <label id="user-conditional" class="required"><?php echo $this->__('Resolution') ?><em id="em-requered"> *</em></label>
+
+                        <select name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId() ?>][resolution_id]" id="resolution_id<?php echo $item->getOrderItemId() ?>" class="required-entry">
+                            <option value=""><?php echo $this->__('-- Select a Resolution --')?></option>
+                            <?php foreach ($this->getResolutionCollection() as $resolution): ?>
+                                <option value="<?php echo $resolution->getId()?>"><?php echo $resolution->getName() ?></option>
+                            <?php endforeach;?>
+                        </select>
+                    </div>
+                <?php endif; ?>
+                <?php $another = $this->getRmasByOrderItem($item->getOrderItem()) ?>
+                <?php if ($another): ?>
+                    <div id="another-rma">
+                        <?php echo $this->__('Another RMA for this product: %s', $another) ?>
+                    </div>
+                <?php endif ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+<?php endforeach; ?>
+
+<?php
+    if($orderPaymentCheck != 0){
+        echo "<input id='orderPaymentCheck' type='hidden' name='orderPaymentCheck' value='1' />";
+        echo "<input id='controllerUrl' type='hidden' name='controllerUrl' value='". Mage::getUrl('refundbanking/attr/setkonto')."' />";
+    }
+?>

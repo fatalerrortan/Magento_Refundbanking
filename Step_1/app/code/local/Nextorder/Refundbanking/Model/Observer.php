@@ -7,8 +7,6 @@
  */
 class Nextorder_Refundbanking_Model_Observer{
 
-//    protected $indexCount = 0;
-
     public function _beforeConfigSave(){
 
         $helper = Mage::helper('refundbanking/data');
@@ -27,10 +25,6 @@ class Nextorder_Refundbanking_Model_Observer{
 
     public function _afterCreditmemoSave(Varien_Event_Observer $event){
 
-
-//        $testVar = Mage::registry('test_var');
-//        Mage::log( "new_VAR kommt: ". $testVar, null, 'xulin.log');
-//        Mage::unregister('test_var');
         $base_path = Mage::getBaseDir('base');
         $orgin_string = str_replace(PHP_EOL,'',file_get_contents($base_path."/app/code/local/Nextorder/Refundbanking/Helper/sepaCheck.txt"));
         if($orgin_string == 0){
@@ -53,49 +47,23 @@ class Nextorder_Refundbanking_Model_Observer{
         $orderNr = $event->getEvent()->getDataObject()->getCreditmemo()->getData('order_id');
         $order = Mage::getModel('sales/order')->load($orderNr);
         $payment_code = $order->getPayment()->getMethodInstance()->getCode();
-//        $payment_title = $order->getPayment()->getMethodInstance()->getTitle();
-
-
-//            $order->addStatusToHistory(Mage_Sales_Model_Order::STATE_CLOSED);
-//            $order->addStatusHistoryComment("My comment why the status was changed", Mage_Sales_Model_Order::STATE_CLOSED);
-//            $order->setData('state', Mage_Sales_Model_Order::STATE_CLOSED);
-//            $order->addStatusToHistory('closed', 'Put!!!!!!!!!!!!!!!!!!!!here', false);
-//            $order->save();
 
             $paymentPools = array('ops_cc','paypal_billing_agreement','paypal_express');
 //        Mage::log( "it works +1", null, 'xulin.log');
 
-        if(!in_array($payment_code, $paymentPools)){
+        if($helper->isConfig($payment_code)){
 
             $kontoInfos_shop = $helper->getKontonForRefund($payment_code);
             $customer = Mage::getModel('customer/customer')->load($order->getData('customer_id'));
 
 
-            $urlForXML = $helper->getSepaXML($customer->getName(), $customer->getId(), $customer->getData('debit_payment_account_iban'), $customer->getData('debit_payment_account_swift'),
+            $urlForXML = $helper->getSepaXML($customer->getData('debit_payment_acount_name'), $customer->getId(), $customer->getData('debit_payment_account_iban'), $customer->getData('debit_payment_account_swift'),
                 $kontoInfos_shop['inhaber'], $kontoInfos_shop['iban'], $kontoInfos_shop['bic'], $order->getIncrementId(), $incrementCreditID, $Grand_Total);
             Mage::getSingleton('adminhtml/session')->addSuccess("Sepa XML Gutschrit ist von User " . $adminUser . " erstellt.<a href='" . str_replace('index.php/', '', Mage::getUrl()) . "media/Sepa_Gutschrift/" . $incrementCreditID . ".xml' download> Zum Download </a>");
-
-//            $order = $event->getData();
-//            Mage::log( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!".$order, null, 'refund.log');
-
-
             $event->getEvent()->getDataObject()->getCreditmemo()->addComment("Sepa XML Gutschrit ist von User " . $adminUser . " erstellt.<a href='" . str_replace('index.php/', '', Mage::getUrl()) . "media/Sepa_Gutschrift/" . $incrementCreditID . ".xml' download> Zum Download </a>", true, true);
+                }
             }
-//            return $this->_statusChange($orderNr);
         }
-
-        }
-
     }
-
-    public function _statusChange(){
-//        $order = Mage::getModel('sales/order')->load($orderNr);
-//        $order->addStatusToHistory(Mage_Sales_Model_Order::STATE_CLOSED)->save();
-//        $order->addStatusToHistory('closed', 'Put your comment here', false);
-
-        Mage::log( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!12312312312", null, 'refund.log');
-        return true;
-    }
-
 }
 ?>

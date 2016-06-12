@@ -82,18 +82,21 @@ class Nextorder_Refundbanking_Helper_Data extends Mage_Core_Helper_Abstract{
 			}
 			if(in_array($payment_code, $config_array)){
 
-				return array("Die Zahlungsart der Kunden ist schon im Admin konfiguriert worden!", 1);
+				return true;
 			}
 			else{
-				return array("Keiner Treffer im Admin!!!!", 0);
+				return false;
 			}
 		}
 
-		public function setKontoInfos($iban, $bic){
+		public function setKontoInfos($inhaber, $iban, $bic){
 
 			$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
 			$customer_data = Mage::getModel('customer/customer')->load($customer_id);
-			$customer_data->setData('debit_payment_account_iban',$iban)->setData('debit_payment_account_swift',$bic)->save();
+			$customer_data->setData('debit_payment_account_iban',$iban)
+				->setData('debit_payment_account_swift',$bic)
+				->setData('debit_payment_acount_name', $inhaber)
+				->save();
 		}
 
 		public function getKontonForRefund($payment_code){
