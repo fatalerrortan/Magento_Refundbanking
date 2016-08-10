@@ -55,7 +55,7 @@ class Nextorder_Refundbanking_Block_Adminhtml_Sales_Order_Creditmemo_Create_Item
             if(Mage::helper("refundbanking/data")->isConfig($payment_code)){
 
                 $customer = Mage::getModel('customer/customer')->load($this->getOrder()->getCustomerId());
-                if(!empty($customer->getData('debit_payment_account_iban')) && !empty($customer->getData('debit_payment_account_swift'))){
+                if((!empty($customer->getData('debit_payment_account_iban'))) && (!empty($customer->getData('debit_payment_account_swift')))){
 
                     $this->setChild(
                         'submit_button_sepa',
